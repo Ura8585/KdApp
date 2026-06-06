@@ -1,0 +1,6 @@
+@Kdbapp_HostAddress = http://localhost:5237
+
+GET {{Kdbapp_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
