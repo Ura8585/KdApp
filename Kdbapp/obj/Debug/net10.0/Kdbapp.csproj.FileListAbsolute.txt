@@ -137,3 +137,6 @@
 /home/urts/RiderProjects/Kdbapp/Kdbapp/obj/Debug/net10.0/Kdbapp.pdb
 /home/urts/RiderProjects/Kdbapp/Kdbapp/obj/Debug/net10.0/Kdbapp.genruntimeconfig.cache
 /home/urts/RiderProjects/Kdbapp/Kdbapp/obj/Debug/net10.0/ref/Kdbapp.dll
+/home/urts/RiderProjects/Kdbapp/Kdbapp/bin/Debug/net10.0/BCrypt-Net-Next.dll
+/home/urts/RiderProjects/Kdbapp/Kdbapp/obj/Debug/net10.0/Kdbapp.sourcelink.json
+/home/urts/RiderProjects/Kdbapp/Kdbapp/bin/Debug/net10.0/Kdbapp.staticwebassets.runtime.json

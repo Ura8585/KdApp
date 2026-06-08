@@ -43,4 +43,24 @@ public class TokenService
         );
     }
 
+    public long? GetSUerToken(string token)
+    {
+        if(string.IsNullOrEmpty(token)) return null;
+        try
+        {
+        var TokenHandler = new JwtSecurityTokenHandler();
+        var Jwt = TokenHandler.ReadJwtToken(token);
+        var userClaimId = Jwt.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
+        if (long.TryParse(userClaimId, out var userId))
+        {
+            return userId;
+        }
+        }
+        catch 
+        {
+            return null;
+        }
+        return  null;
+    }
+
 }

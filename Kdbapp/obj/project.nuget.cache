@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "nwFCRrXfZU4=",
+  "dgSpecHash": "UR0DNrSyIZ0=",
   "success": true,
   "projectFilePath": "/home/urts/RiderProjects/Kdbapp/Kdbapp/Kdbapp.csproj",
   "expectedPackageFiles": [
+    "/home/urts/.nuget/packages/bcrypt.net-next/4.2.0/bcrypt.net-next.4.2.0.nupkg.sha512",
     "/home/urts/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
     "/home/urts/.nuget/packages/microsoft.aspnetcore.authentication.jwtbearer/10.0.8/microsoft.aspnetcore.authentication.jwtbearer.10.0.8.nupkg.sha512",
     "/home/urts/.nuget/packages/microsoft.aspnetcore.openapi/10.0.4/microsoft.aspnetcore.openapi.10.0.4.nupkg.sha512",
