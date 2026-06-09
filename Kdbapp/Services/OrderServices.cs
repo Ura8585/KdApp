@@ -16,7 +16,6 @@ public class OrderService
     {
         var config = await _db.Keyboardconfigurations
             .Include(k => k.Casesize)
-            .Include(k => k.Switchtype) 
             .Include(k => k.Keycaps)   
             .FirstOrDefaultAsync(k => k.Id == configId);
         if (config == null) return null;
@@ -28,15 +27,19 @@ public class OrderService
             _db.Keyboardconfigurations.Update(config);
             await _db.SaveChangesAsync();
         }
+
+        var switchComponent = await _db.Components.FindAsync(config.SwitchtypeId);
+    
         return new Order
         {
             ConfigurationId = config.Id,
             UserId = user.Id, 
             Contactemail = user.Email,
-            TotalPrice = CalculateTotal(config),
+            TotalPrice = CalculateTotal(config, switchComponent),
             Quantity = 1
         };
     }
+    
     public async Task<long> PlaceOrderAsync(Order order)
     {
         if (string.IsNullOrEmpty(order.ShippingAddress) || order.ShippingAddress.Length < 8)
@@ -70,18 +73,16 @@ public class OrderService
             .Include(o => o.Configuration)
                 .ThenInclude(c => c.Casesize)
             .Include(o => o.Configuration)
-                .ThenInclude(c => c.Switchtype)
-            .Include(o => o.Configuration)
                 .ThenInclude(c => c.Keycaps)
             .Where(o => o.UserId == userId)
             .OrderByDescending(o => o.CreatedAt) 
             .ToListAsync();
     }
 
-    private decimal CalculateTotal(Keyboardconfiguration config)
+    private decimal CalculateTotal(Keyboardconfiguration config, Component? switchComponent)
     {
         return (config.Casesize?.Price ?? 0) +
-               (config.Switchtype?.Price ?? 0) +
+               (switchComponent?.Price ?? 0) +
                (config.Keycaps?.Price ?? 0);
     }
 }

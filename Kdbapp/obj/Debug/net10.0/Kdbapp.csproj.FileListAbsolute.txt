@@ -1,11 +1,13 @@
 /home/urts/RiderProjects/Kdbapp/Kdbapp/bin/Debug/net10.0/appsettings.Development.json
 /home/urts/RiderProjects/Kdbapp/Kdbapp/bin/Debug/net10.0/appsettings.json
+/home/urts/RiderProjects/Kdbapp/Kdbapp/bin/Debug/net10.0/Kdbapp.staticwebassets.runtime.json
 /home/urts/RiderProjects/Kdbapp/Kdbapp/bin/Debug/net10.0/Kdbapp.staticwebassets.endpoints.json
 /home/urts/RiderProjects/Kdbapp/Kdbapp/bin/Debug/net10.0/Kdbapp
 /home/urts/RiderProjects/Kdbapp/Kdbapp/bin/Debug/net10.0/Kdbapp.deps.json
 /home/urts/RiderProjects/Kdbapp/Kdbapp/bin/Debug/net10.0/Kdbapp.runtimeconfig.json
 /home/urts/RiderProjects/Kdbapp/Kdbapp/bin/Debug/net10.0/Kdbapp.dll
 /home/urts/RiderProjects/Kdbapp/Kdbapp/bin/Debug/net10.0/Kdbapp.pdb
+/home/urts/RiderProjects/Kdbapp/Kdbapp/bin/Debug/net10.0/BCrypt-Net-Next.dll
 /home/urts/RiderProjects/Kdbapp/Kdbapp/bin/Debug/net10.0/Humanizer.dll
 /home/urts/RiderProjects/Kdbapp/Kdbapp/bin/Debug/net10.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
 /home/urts/RiderProjects/Kdbapp/Kdbapp/bin/Debug/net10.0/Microsoft.AspNetCore.OpenApi.dll
@@ -122,6 +124,7 @@
 /home/urts/RiderProjects/Kdbapp/Kdbapp/obj/Debug/net10.0/Kdbapp.csproj.CoreCompileInputs.cache
 /home/urts/RiderProjects/Kdbapp/Kdbapp/obj/Debug/net10.0/Kdbapp.MvcApplicationPartsAssemblyInfo.cs
 /home/urts/RiderProjects/Kdbapp/Kdbapp/obj/Debug/net10.0/Kdbapp.MvcApplicationPartsAssemblyInfo.cache
+/home/urts/RiderProjects/Kdbapp/Kdbapp/obj/Debug/net10.0/Kdbapp.sourcelink.json
 /home/urts/RiderProjects/Kdbapp/Kdbapp/obj/Debug/net10.0/rjimswa.dswa.cache.json
 /home/urts/RiderProjects/Kdbapp/Kdbapp/obj/Debug/net10.0/rjsmrazor.dswa.cache.json
 /home/urts/RiderProjects/Kdbapp/Kdbapp/obj/Debug/net10.0/rjsmcshtml.dswa.cache.json
@@ -137,6 +140,3 @@
 /home/urts/RiderProjects/Kdbapp/Kdbapp/obj/Debug/net10.0/Kdbapp.pdb
 /home/urts/RiderProjects/Kdbapp/Kdbapp/obj/Debug/net10.0/Kdbapp.genruntimeconfig.cache
 /home/urts/RiderProjects/Kdbapp/Kdbapp/obj/Debug/net10.0/ref/Kdbapp.dll
-/home/urts/RiderProjects/Kdbapp/Kdbapp/bin/Debug/net10.0/BCrypt-Net-Next.dll
-/home/urts/RiderProjects/Kdbapp/Kdbapp/obj/Debug/net10.0/Kdbapp.sourcelink.json
-/home/urts/RiderProjects/Kdbapp/Kdbapp/bin/Debug/net10.0/Kdbapp.staticwebassets.runtime.json
