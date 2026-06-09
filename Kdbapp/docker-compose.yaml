@@ -1,0 +1,15 @@
+﻿version: '3.8'
+
+services:
+  backend:
+    build: .
+    container_name: kdb-backend
+    restart: always
+    ports:
+      - "8968:5237"
+    depends_on:
+      - postgres
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5237
+      - ConnectionStrings__DefaultConnection=Host=postgres;Database=kbrddbapp;Username=postgres;Password=8585
