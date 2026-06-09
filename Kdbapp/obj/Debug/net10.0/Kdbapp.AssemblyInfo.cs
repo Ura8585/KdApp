@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Kdbapp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0cb8e1880dcd68425c96f16cf95b2132575f4f65")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+66acb0eec733f45b5b5e9cba9d0c8a7c972975d5")]
 [assembly: System.Reflection.AssemblyProductAttribute("Kdbapp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Kdbapp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
