@@ -2,7 +2,9 @@
 
 services:
   backend:
-    build: .
+    build:
+      context: .
+      dockerfile: ./Dockerfile
     container_name: kdb-backend
     restart: always
     ports:
@@ -10,5 +12,4 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:5237
-      # Обновленная строка подключения к внешней базе данных
       - ConnectionStrings__DefaultConnection=Host=89.109.16.50;Port=8967;Database=postgres;Username=postgres;Password=TZzGdgtJGBfky99We9hu26lvIgWGi11RrWXK70zo4EW9dXQpmCizY6zwaAieR6wj
