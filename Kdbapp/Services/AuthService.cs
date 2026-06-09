@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Kdbapp.Data;
 using Kdbapp.Models;
-using BCrypt.Net; // <--- Подключаем шифровальщик
+using BCrypt.Net; 
 
 namespace Kdbapp.Services;
 
@@ -14,10 +14,9 @@ public class AuthService
         _db = db;
         _tokenService = tokenService;
     }
-    // Добавляем второй параметр CancellationToken со значением по умолчанию
     public async Task<string> RegisterUserAsync(RegisterDto model, CancellationToken cancellationToken = default)
     {
-        // Передаем токен отмены внутрь FirstOrDefaultAsync
+        
         var existingUser = await _db.Users
             .FirstOrDefaultAsync(u => u.Login == model.Login || u.Email == model.Email, cancellationToken);
 
