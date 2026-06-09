@@ -4,7 +4,7 @@ services:
   backend:
     build:
       context: .
-      dockerfile: ./Dockerfile
+      dockerfile: Kdbapp/Dockerfile
     container_name: kdb-backend
     restart: always
     ports:
