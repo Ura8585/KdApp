@@ -1,10 +1,8 @@
 ﻿services:
   backend:
     build:
-      context: ..                 # Корень репозитория: тут лежит .dockerignore, а Dockerfile ждёт путь Kdbapp/Kdbapp.csproj
+      context: .                  # Корень репозитория (тут лежит .dockerignore, Dockerfile ждёт путь Kdbapp/Kdbapp.csproj)
       dockerfile: Kdbapp/Dockerfile
-      network: host               # Решает проблему, если контейнер во время сборки не видит интернет/NuGet
-    container_name: kdb-backend
     restart: always
     ports:
       - "8968:5237"
