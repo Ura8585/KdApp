@@ -1,12 +1,18 @@
 ﻿FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
-# Копируем только csproj
-COPY Kdbapp/*.csproj Kdbapp/
+# === Копируем ВСЕ project files для restore ===
+COPY *.sln .
+COPY **/*.csproj ./
+
+# Если структура у тебя Kdbapp/ в корне, то лучше так:
+# COPY Kdbapp/*.csproj Kdbapp/
+# COPY */*.csproj ./
+
 RUN dotnet restore "Kdbapp/Kdbapp.csproj"
 
-# Копируем весь код
-COPY Kdbapp/ Kdbapp/
+# Копируем весь исходный код
+COPY . .
 
 WORKDIR /src/Kdbapp
 RUN dotnet publish -c Release -o /app/publish --no-restore
