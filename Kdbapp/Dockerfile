@@ -3,7 +3,7 @@ WORKDIR /src
 
 COPY . .
 
-# Включаем подробный вывод, чтобы увидеть настоящую ошибку
+# Самое важное — подробный вывод ошибки
 RUN dotnet restore "Kdbapp/Kdbapp.csproj" --verbosity detailed
 
 WORKDIR /src/Kdbapp
