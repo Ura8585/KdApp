@@ -5,6 +5,7 @@ services:
     build:
       context: .
       dockerfile: Kdbapp/Dockerfile
+      network: host # Решает проблему, если контейнер во время сборки не видит интернет/NuGet
     container_name: kdb-backend
     restart: always
     ports:
