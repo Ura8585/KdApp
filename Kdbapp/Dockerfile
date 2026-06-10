@@ -1,18 +1,23 @@
 ﻿FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-# Создаем и переходим в папку бэкенда внутри контейнера
+WORKDIR /src
+
+# Copy solution and all csproj files first (best layer caching)
+COPY *.sln .
+COPY Kdbapp/*.csproj Kdbapp/
+# If you have other projects (Data, Shared, etc.), copy their .csproj too:
+# COPY AnotherProject/*.csproj AnotherProject/
+
+RUN dotnet restore "Kdbapp/Kdbapp.csproj"
+
+# Copy the rest of the source
+COPY Kdbapp/ Kdbapp/
+# COPY other projects if needed...
+
 WORKDIR /src/Kdbapp
+RUN dotnet publish -c Release -o /app/publish --no-restore
 
-# Копируем .csproj файл из локальной папки Kdbapp
-COPY Kdbapp/*.csproj ./
-RUN dotnet restore
-
-# Копируем остальные исходники бэкенда
-COPY Kdbapp/ ./
-RUN dotnet publish -c Release -o /app/publish
-
-FROM mcr.microsoft.com/dotnet/aspnet:8.0
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
 WORKDIR /app
 COPY --from=build /app/publish .
 EXPOSE 5237
-
 ENTRYPOINT ["dotnet", "Kdbapp.dll"]
