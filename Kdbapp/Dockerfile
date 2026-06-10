@@ -3,12 +3,14 @@ WORKDIR /src
 
 # Копируем файл проекта из подпапки Kdbapp
 COPY Kdbapp/*.csproj ./Kdbapp/
-RUN dotnet restore "Kdbapp/Kdbapp.csproj"
+# Восстанавливаем пакеты, указывая просто на папку (универсальный поиск csproj)
+RUN dotnet restore "Kdbapp/"
 
 # Копируем все остальные исходники
 COPY . .
 WORKDIR "/src/Kdbapp"
-RUN dotnet publish "Kdbapp.csproj" -c Release -o /app/publish
+# Собираем проект, также указывая на папку
+RUN dotnet publish -c Release -o /app/publish
 
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
 WORKDIR /app
