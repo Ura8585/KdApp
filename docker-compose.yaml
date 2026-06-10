@@ -1,12 +1,16 @@
-﻿services:
-  backend:
+﻿version: '3.8'
+
+services:
+  webapi:
     build:
       context: .
       dockerfile: Kdbapp/Dockerfile
-    restart: always
+    container_name: kdb-app-container
     ports:
-      - "8968:5237"
+      - "8968:8080"
+    restart: always
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://+:5237
-      - ConnectionStrings__DefaultConnection=Host=89.109.16.50;Port=8967;Database=postgres;Username=postgres;Password=TZzGdgtJGBfky99We9hu26lvIgWGi11RrWXK70zo4EW9dXQpmCizY6zwaAieR6wj
+      - ASPNETCORE_ENVIRONMENT=Production
+      # Если БД крутится на том же сервере вне докера, разрешаем доступ к хосту:
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
