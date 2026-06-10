@@ -1,13 +1,11 @@
 ﻿FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
-# Копируем ВСЁ, что есть (самый надёжный способ для начала)
+# Копируем абсолютно всё
 COPY . .
 
-# Восстанавливаем
 RUN dotnet restore "Kdbapp/Kdbapp.csproj"
 
-# Публикуем
 WORKDIR /src/Kdbapp
 RUN dotnet publish -c Release -o /app/publish --no-restore
 
