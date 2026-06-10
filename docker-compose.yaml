@@ -1,16 +1,34 @@
 ﻿version: '3.8'
 
 services:
+  # Сервер базы данных PostgreSQL
+  postgres-db:
+    image: postgres:15-alpine
+    container_name: kdb-postgres-container
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=your_secure_password  # Придумай сложный пароль
+      - POSTGRES_DB=kbrddbapp
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  # Твое C# Web API
   webapi:
     build:
       context: .
       dockerfile: Kdbapp/Dockerfile
     container_name: kdb-app-container
+    restart: always
     ports:
       - "8968:8080"
-    restart: always
+    depends_on:
+      - postgres-db
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
-      # Если БД крутится на том же сервере вне докера, разрешаем доступ к хосту:
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
+      - ConnectionStrings__DefaultConnection=Server=postgres-db;Port=8967;Database=kbrddbapp;User Id=;Password=TZzGdgtJGBfky99We9hu26lvIgWGi11RrWXK70zo4EW9dXQpmCizY6zwaAieR6wj;
+
+volumes:
+  pgdata:
