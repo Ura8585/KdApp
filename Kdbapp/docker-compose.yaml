@@ -3,8 +3,8 @@
 services:
   backend:
     build:
-      context: .
-      dockerfile: Kdbapp/Dockerfile
+      context: ./Kdbapp     # Заходим в папку, где лежат и Dockerfile, и исходники
+      dockerfile: Dockerfile # Берем Dockerfile отсюда же
     container_name: kdb-backend
     restart: always
     ports:
