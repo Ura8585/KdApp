@@ -1,16 +1,16 @@
-﻿version: '3.8'
-
-services:
-  webapi:
+﻿webapi:
     build:
       context: .
       dockerfile: Kdbapp/Dockerfile
     container_name: kdb-app-container
+    restart: always
     ports:
       - "8968:8080"
-    restart: always
+    depends_on:
+      - postgres-db
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
-      # Если БД крутится на том же сервере вне докера, разрешаем доступ к хосту:
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
+      # Формат 1 (Стандартный для Docker + .NET)
+      - "ConnectionStrings__DefaultConnection=Server=postgres-db;Port=5432;Database=kbrddbapp;User Id=postgres;Password=TZzGdgtJGBfky99We9hu26lvIgWGi11RrWXK70zo4EW9dXQpmCizY6zwaAieR6wj;"
+      # Формат 2 (Альтернативный, на случай если Coolify съедает двойное подчеркивание)
+      - "ConnectionStrings:DefaultConnection=Server=postgres-db;Port=5432;Database=kbrddbapp;User Id=postgres;Password=TZzGdgtJGBfky99We9hu26lvIgWGi11RrWXK70zo4EW9dXQpmCizY6zwaAieR6wj;"
