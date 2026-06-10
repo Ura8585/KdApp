@@ -1,10 +1,10 @@
 ﻿FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
-# Копируем абсолютно всё
 COPY . .
 
-RUN dotnet restore "Kdbapp/Kdbapp.csproj"
+# Включаем подробный вывод, чтобы увидеть настоящую ошибку
+RUN dotnet restore "Kdbapp/Kdbapp.csproj" --verbosity detailed
 
 WORKDIR /src/Kdbapp
 RUN dotnet publish -c Release -o /app/publish --no-restore
