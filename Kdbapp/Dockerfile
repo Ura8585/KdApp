@@ -3,8 +3,7 @@ WORKDIR /src
 
 COPY . .
 
-# Самое важное — подробный вывод ошибки
-RUN dotnet restore "Kdbapp/Kdbapp.csproj" --verbosity detailed
+RUN dotnet restore "Kdbapp/Kdbapp.csproj"
 
 WORKDIR /src/Kdbapp
 RUN dotnet publish -c Release -o /app/publish --no-restore

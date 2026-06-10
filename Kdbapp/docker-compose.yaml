@@ -1,11 +1,10 @@
 ﻿version: '3.8'
-
 services:
   backend:
     build:
-      context: .
-      dockerfile: Kdbapp/Dockerfile
-      network: host # Решает проблему, если контейнер во время сборки не видит интернет/NuGet
+      context: .          # ← важно!
+      dockerfile: Dockerfile
+      network: host
     container_name: kdb-backend
     restart: always
     ports:
