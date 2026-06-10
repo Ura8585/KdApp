@@ -1,17 +1,12 @@
 ﻿FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
-# Copy solution and all csproj files first (best layer caching)
-COPY *.sln .
+# Копируем только csproj
 COPY Kdbapp/*.csproj Kdbapp/
-# If you have other projects (Data, Shared, etc.), copy their .csproj too:
-# COPY AnotherProject/*.csproj AnotherProject/
-
 RUN dotnet restore "Kdbapp/Kdbapp.csproj"
 
-# Copy the rest of the source
+# Копируем весь код
 COPY Kdbapp/ Kdbapp/
-# COPY other projects if needed...
 
 WORKDIR /src/Kdbapp
 RUN dotnet publish -c Release -o /app/publish --no-restore
