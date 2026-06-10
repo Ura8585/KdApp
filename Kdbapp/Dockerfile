@@ -1,11 +1,11 @@
 ﻿FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /src
 
-# Сначала только csproj + restore — отдельный слой для кэша NuGet
+# Копируем из папки Kdbapp файл csproj в папку Kdbapp внутри контейнера
 COPY Kdbapp/Kdbapp.csproj Kdbapp/
 RUN dotnet restore "Kdbapp/Kdbapp.csproj"
 
-# Затем остальной код и публикация
+# Копируем всё остальное
 COPY . .
 WORKDIR /src/Kdbapp
 RUN dotnet publish -c Release -o /app/publish --no-restore

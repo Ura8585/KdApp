@@ -1,7 +1,4 @@
-﻿**/bin/
-**/obj/
-**/*.user
-**/*.vs
-**/.vscode/
-.git/
+﻿bin/
+obj/
 .idea/
+.git/

@@ -1,3 +1,4 @@
+using Kdbapp.Attributes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Kdbapp.Data;
@@ -212,6 +213,66 @@ public class AdminController : ControllerBase
         var totalComponents = await _db.Components.CountAsync();
 
         return Ok(new { totalOrders, totalUsers, totalRevenue, totalGallery, totalComponents });
+    }
+    [HttpGet("assembler/orders")]
+    [RoleAuthorize("admin", "moderator", "assembler")]
+    public async Task<IActionResult> GetAssemblerOrders()
+    {
+        var orders = await _db.Orders
+            .Include(o => o.User)
+            .Include(o => o.Configuration)
+                .ThenInclude(c => c.Casesize)
+            .Include(o => o.Configuration)
+                .ThenInclude(c => c.Keycaps)
+            .Include(o => o.StatusNavigation)
+            .Where(o => o.Status == 2 || o.Status == 6)
+            .OrderBy(o => o.CreatedAt)
+            .ToListAsync();
+
+        var result = orders.Select(o => new
+        {
+            o.Id,
+            UserLogin = o.User?.Login ?? "—",
+            o.TotalPrice,
+            Status = o.StatusNavigation?.Name ?? "—",
+            StatusId = o.Status,
+            o.CreatedAt,
+            o.ShippingAddress,
+            ConfigId = o.Configuration?.Id,
+            CaseName = o.Configuration?.Casesize?.Name,
+            KeycapName = o.Configuration?.Keycaps?.Name,
+            Layout = o.Configuration?.Layout,
+            CaseColor = o.Configuration?.CaseColor,
+            KeycapColor = o.Configuration?.KeycapColor,
+            SwitchType = o.Configuration?.SwitchType,
+            SwitchColor = o.Configuration?.SwitchColor,
+            KeycapMaterialType = o.Configuration?.KeycapMaterialType,
+            HasCustomPrint = o.Configuration?.HasCustomPrint
+        });
+
+        return Ok(result);
+    }
+
+    [HttpPut("assembler/orders/{id}/start")]
+    [RoleAuthorize("admin", "moderator", "assembler")]
+    public async Task<IActionResult> StartAssembly(long id)
+    {
+        var order = await _db.Orders.FindAsync(id);
+        if (order == null) return NotFound();
+        order.Status = 6;
+        await _db.SaveChangesAsync();
+        return Ok(new { message = "Сборка начата", orderId = id });
+    }
+
+    [HttpPut("assembler/orders/{id}/complete")]
+    [RoleAuthorize("admin", "moderator", "assembler")]
+    public async Task<IActionResult> CompleteAssembly(long id)
+    {
+        var order = await _db.Orders.FindAsync(id);
+        if (order == null) return NotFound();
+        order.Status = 3;
+        await _db.SaveChangesAsync();
+        return Ok(new { message = "Сборка завершена!", orderId = id });
     }
 }
 

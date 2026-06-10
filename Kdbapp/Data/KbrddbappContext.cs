@@ -79,12 +79,11 @@ public partial class KbrddbappContext : DbContext
                 .HasConstraintName("gallery_keyboardconfigurations_fk");
         });
 
-         modelBuilder.Entity<Keyboardconfiguration>(entity =>
+        modelBuilder.Entity<Keyboardconfiguration>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("keyboardconfigurations_pk");
             entity.ToTable("keyboardconfigurations");
             entity.HasIndex(e => e.Configurationhash, "keyboardconfigurations_unique").IsUnique();
-            
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.CaseColor).HasMaxLength(20).HasColumnName("casecolor");
             entity.Property(e => e.CasesizeId).HasColumnName("casesize_id");
