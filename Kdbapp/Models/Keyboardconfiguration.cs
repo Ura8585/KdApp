@@ -29,7 +29,6 @@ public partial class Keyboardconfiguration
     public string? CustomPrintImageUrl { get; set; }
     public string? TotalPriceRaw { get; set; }
 
-    // Навигационные свойства
     [JsonIgnore]
     public virtual Component? Casesize { get; set; }
     [JsonIgnore]

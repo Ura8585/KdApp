@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Kdbapp.Data;
@@ -15,8 +16,6 @@ public class AdminController : ControllerBase
     {
         _db = db;
     }
-
-    // Проверка доступа прямо в методах
     private bool IsAdmin()
     {
         var role = User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value;
@@ -220,9 +219,14 @@ public class UpdateRoleDto { public string Role { get; set; } = "user"; }
 public class ModerateDto { public bool Approved { get; set; } }
 public class AddComponentDto
 {
+    [Required(ErrorMessage = "Поле не может быть пустым")]
     public string Category { get; set; } = "";
+    [MaxLength(20, ErrorMessage = "Слишком длинное название")]
+    [Required(ErrorMessage = "поле не может быть  пустым")]
     public string Name { get; set; } = "";
+    [Required(ErrorMessage = "Поле не может быть пустым")]
     public string? Description { get; set; }
+    [Required(ErrorMessage = "Поле не может быть пустым")]
     public decimal Price { get; set; }
     public bool InStook { get; set; } = true;
     public string? ImageUrl { get; set; }

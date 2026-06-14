@@ -30,8 +30,6 @@ public async Task<IActionResult> ChangeConfiguration(long id, [FromBody] ChangeC
 
     if (order == null)
         return NotFound(new { error = "Заказ не найден" });
-
-    // Только статус 1 (Новый)
     if (order.Status != 1)
         return BadRequest(new { error = "Можно менять конфигурацию только в статусе 'Новый'" });
 
@@ -39,12 +37,9 @@ public async Task<IActionResult> ChangeConfiguration(long id, [FromBody] ChangeC
     if (config == null)
         return NotFound(new { error = "Конфигурация не найдена" });
 
-    // Обновляем компоненты
     if (dto.CaseId.HasValue) config.CasesizeId = dto.CaseId.Value;
     if (dto.SwitchId.HasValue) config.SwitchtypeId = dto.SwitchId.Value;
     if (dto.KeycapId.HasValue) config.KeycapsId = dto.KeycapId.Value;
-
-    // Пересчитываем цену
     var caseComponent = dto.CaseId.HasValue ? await _db.Components.FindAsync(dto.CaseId.Value) : null;
     var switchComponent = dto.SwitchId.HasValue ? await _db.Components.FindAsync(dto.SwitchId.Value) : null;
     var keycapComponent = dto.KeycapId.HasValue ? await _db.Components.FindAsync(dto.KeycapId.Value) : null;
@@ -62,7 +57,6 @@ public async Task<IActionResult> ChangeConfiguration(long id, [FromBody] ChangeC
     });
 }
 
-// Добавь DTO класс в конец файла
 public class ChangeConfigurationDto
 {
     public int? CaseId { get; set; }
@@ -130,7 +124,6 @@ public class ChangeConfigurationDto
 
         var orders = await _orderService.GetUserOrdersAsync(userId);
         
-        // Добавляем название статуса
         var result = orders.Select(o => new
         {
             o.Id,
@@ -164,7 +157,6 @@ public class ChangeConfigurationDto
             return NotFound(new { error = "Заказ не найден" });
         }
 
-        // Проверяем статус (1 = Новый, 2 = В обработке)
         if (order.Status != 1 && order.Status != 2)
         {
             return BadRequest(new { error = "Можно изменять только заказы в статусе 'Новый' или 'В обработке'" });
@@ -202,16 +194,13 @@ public class ChangeConfigurationDto
             return NotFound(new { error = "Заказ не найден" });
         }
 
-        // Проверяем статус (1 = Новый, 2 = В обработке)
         if (order.Status != 1 && order.Status != 2)
         {
             return BadRequest(new { error = "Можно отменить только заказы в статусе 'Новый' или 'В обработке'" });
         }
 
-        // Статус "Отменён" = 6 (если у тебя такой id)
         order.Status = 5;
 
-        // Записываем в историю
         var history = new Orderstatushistory
         {
             OrderId = order.Id,
