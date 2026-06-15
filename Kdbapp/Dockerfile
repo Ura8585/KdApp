@@ -1,15 +1,11 @@
-﻿FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
-WORKDIR /src
-COPY Kdbapp/Kdbapp.csproj Kdbapp/
-RUN dotnet restore "Kdbapp/Kdbapp.csproj"
-
-COPY . .
-WORKDIR /src/Kdbapp
-RUN dotnet publish -c Release -o /app/publish --no-restore
- 
-
-FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS runtime
+﻿FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /app
-COPY --from=build /app/publish .
+COPY Kdbapp/Kdbapp.csproj .
+RUN dotnet restore
+COPY Kdbapp/ .
+RUN dotnet publish -c Release -o out
+FROM mcr.microsoft.com/dotnet/aspnet:8.0
+WORKDIR /app
+COPY --from=build /app/out .
 EXPOSE 5237
 ENTRYPOINT ["dotnet", "Kdbapp.dll"]
