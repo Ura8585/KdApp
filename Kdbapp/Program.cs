@@ -24,7 +24,8 @@ builder.Services.AddControllers()
         {
                 options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
                 options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
-        });builder.Services.AddScoped<TokenService>();
+        });
+builder.Services.AddScoped<TokenService>();
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<CatalogService>();       
 builder.Services.AddScoped<ConfigurationService>(); 
@@ -50,7 +51,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 });
 builder.Services.AddCors(options =>
 {
-        options.AddPolicy("AllowNextJS", policy =>
+        options.AddPolicy("AllowAll", policy =>
         {
                 policy.AllowAnyOrigin()
                         .AllowAnyHeader()
@@ -58,7 +59,7 @@ builder.Services.AddCors(options =>
         });
 });
 var app = builder.Build();
-app.UseCors("AllowNextJS");
+app.UseCors("AllowAll");
 app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
