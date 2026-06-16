@@ -24,10 +24,16 @@ public partial class KbrddbappContext : DbContext
     public virtual DbSet<OrderStatus> OrderStatuses { get; set; }
     public virtual DbSet<Orderstatushistory> Orderstatushistories { get; set; }
     public virtual DbSet<User> Users { get; set; }
-
+    
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseNpgsql("Host=localhost;Database=kbrddbapp;Username=postgres;Password=8585");
-
+    {
+        if (!optionsBuilder.IsConfigured)
+        {
+            // Этот блок сработает ТОЛЬКО при локальной разработке/миграциях, 
+            // если в Program.cs ничего не передано. В Docker он запускаться не будет.
+            optionsBuilder.UseNpgsql("Host=localhost;Database=kbrddbapp;Username=postgres;Password=8585");
+        }
+    }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Component>(entity =>
