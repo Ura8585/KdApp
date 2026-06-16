@@ -14,5 +14,8 @@ services:
       - ASPNETCORE_URLS=http://+:5237
       # ВНИМАНИЕ: Изменил Port на 8967, как ты указал для базы данных
       - ConnectionStrings__DefaultConnection=Host=host.docker.internal;Port=8967;Database=kbrddbapp;Username=postgres;Password=8585
+      - Jwt__Key=LHSDLKGHlngshjglshHkjfolkohsewkljhghkgjoldsfgjlkGHJKhkjgkhjhdgkHKJGhKHGkkhhhghkjd
+      - Jwt__Issuer=appServer
+      - Jwt__Audience=appClient
     extra_hosts:
       - "host.docker.internal:host-gateway"
