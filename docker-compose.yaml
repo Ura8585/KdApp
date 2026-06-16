@@ -1,4 +1,6 @@
-﻿services:
+version: '3.8'
+
+services:
   backend:
     build:
       context: .
@@ -10,6 +12,7 @@
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:5237
-      - ConnectionStrings__DefaultConnection=Host=host.docker.internal;Port=5432;Database=kbrddbapp;Username=postgres;Password=8585
+      # ВНИМАНИЕ: Изменил Port на 8967, как ты указал для базы данных
+      - ConnectionStrings__DefaultConnection=Host=host.docker.internal;Port=8967;Database=kbrddbapp;Username=postgres;Password=8585
     extra_hosts:
       - "host.docker.internal:host-gateway"
