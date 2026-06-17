@@ -17,62 +17,51 @@ public class GalleryController : ControllerBase
         _db = db;
     }
 
-[HttpGet]
-public async Task<IActionResult> GetAll()
-{
-    var gallery = await _db.Galleries
-        .Include(g => g.Config)
-            .ThenInclude(c => c.Casesize)
-        .Include(g => g.Config)
-            .ThenInclude(c => c.Keycaps)
-        .Include(g => g.Author)
-        .Where(g => g.IsModerated == true)
-        .OrderByDescending(g => g.CreatedAt)
-        .ToListAsync();
-    var switchIds = gallery
-        .Select(g => g.Config?.SwitchtypeId)
-        .Where(id => id != null)
-        .Select(id => id!.Value)
-        .Distinct()
-        .ToList();
-    var switches = await _db.Components
-        .Where(c => switchIds.Contains(c.Id))
-        .ToDictionaryAsync(c => c.Id, c => c.Price);
-
-    var result = new List<object>();
-
-    foreach (var g in gallery)
+    [HttpGet]
+    public async Task<IActionResult> GetAll()
     {
-        var config = g.Config;
-        result.Add(new
-        {
-            id = g.Id,
-            title = g.Title,
-            author = g.Author?.Login ?? "Аноним",
-            authorAvatar = g.Author?.AvatarUrl,
-            configId = g.ConfigId,
-            layout = config?.Layout,
-            caseColor = config?.CaseColor,
-            keycapColor = config?.KeycapColor,
-            volumeColor = config?.VolumeColor,
-            switchColor = config?.SwitchColor,
-            keycapMaterialType = config?.KeycapMaterialType,
-            switchType = config?.SwitchType,
-            rgbMode = config?.RgbMode,
-            hasCustomPrint = config?.HasCustomPrint,
-            customPrintImageUrl = config?.CustomPrintImageUrl,
-            caseName = config?.Casesize?.Name,
-            keycapName = config?.Keycaps?.Name,
-            totalPrice = (config?.Casesize?.Price ?? 0) 
-                + (config?.Keycaps?.Price ?? 0) 
-                + (config?.SwitchtypeId != null && switches.ContainsKey(config.SwitchtypeId.Value) ? switches[config.SwitchtypeId.Value] : 0),
-            createdAt = g.CreatedAt,
-            likesCount = g.Likescount
-        });
-    }
+        var gallery = await _db.Galleries
+            .Include(g => g.Config)
+            .ThenInclude(c => c.Casesize)
+            .Include(g => g.Config)
+            .ThenInclude(c => c.Keycaps)
+            .Include(g => g.Author)
+            .Where(g => g.IsModerated == true)
+            .OrderByDescending(g => g.CreatedAt)
+            .ToListAsync();
 
-    return Ok(result);
-}
+        var result = new List<object>();
+
+        foreach (var g in gallery)
+        {
+            var config = g.Config;
+            result.Add(new
+            {
+                id = g.Id,
+                title = g.Title,
+                author = g.Author?.Login ?? "Аноним",
+                authorAvatar = g.Author?.AvatarUrl,
+                configId = g.ConfigId,
+                layout = config?.Layout,
+                caseColor = config?.CaseColor,
+                keycapColor = config?.KeycapColor,
+                volumeColor = config?.VolumeColor,
+                switchColor = config?.SwitchColor,
+                keycapMaterialType = config?.KeycapMaterialType,
+                switchType = config?.SwitchType,
+                rgbMode = config?.RgbMode,
+                hasCustomPrint = config?.HasCustomPrint,
+                customPrintImageUrl = config?.CustomPrintImageUrl,
+                caseName = config?.Casesize?.Name,
+                keycapName = config?.Keycaps?.Name,
+                totalPrice = decimal.TryParse(config?.TotalPriceRaw, out var tp) ? tp : 0,
+                createdAt = g.CreatedAt,
+                likesCount = g.Likescount
+            });
+        }
+
+        return Ok(result);
+    }
 
     [HttpPost("publish")]
     public async Task<IActionResult> Publish([FromBody] PublishToGalleryDto dto)
