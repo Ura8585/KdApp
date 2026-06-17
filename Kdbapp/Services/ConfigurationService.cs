@@ -44,7 +44,7 @@ public class ConfigurationService
             ConfigurationId = config.Id,
             Case = config.Casesize,
             Keycap = config.Keycaps,
-            TotalPrice = (config.Casesize?.Price ?? 0) + (config.Keycaps?.Price ?? 0)
+            TotalPrice = (config.Casesize?.Price ?? 0) + (config.Keycaps?.Price ?? 0) + (config.SwitchtypeId != null ? _db.Components.Find(config.SwitchtypeId)?.Price ?? 0 : 0)
         };
     }
 
@@ -83,7 +83,7 @@ public class ConfigurationService
             RgbMode = dto.RgbMode,
             HasCustomPrint = dto.HasCustomPrint,
             CustomPrintImageUrl = printImagePath,
-            TotalPriceRaw = dto.TotalPrice
+            TotalPriceRaw = dto.TotalPrice?.Replace("₽", "").Replace(" ", "").Trim()
         };
 
         _db.Keyboardconfigurations.Add(config);

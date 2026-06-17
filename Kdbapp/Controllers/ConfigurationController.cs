@@ -100,7 +100,7 @@ public class ConfigurationController : ControllerBase
             caseComp = config.Casesize == null ? null : new { id = config.Casesize.Id, name = config.Casesize.Name, price = config.Casesize.Price },
             switchComp = switchComponent == null ? null : new { id = switchComponent.Id, name = switchComponent.Name, price = switchComponent.Price },
             keycap = config.Keycaps == null ? null : new { id = config.Keycaps.Id, name = config.Keycaps.Name, price = config.Keycaps.Price },
-            totalPrice = (config.Casesize?.Price ?? 0) + (switchComponent?.Price ?? 0) + (config.Keycaps?.Price ?? 0)
+            totalPrice = decimal.TryParse(config.TotalPriceRaw, out var tp) ? tp : 0
         });
     }
 }
