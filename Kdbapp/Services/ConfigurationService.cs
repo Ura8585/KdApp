@@ -44,7 +44,7 @@ public class ConfigurationService
             ConfigurationId = config.Id,
             Case = config.Casesize,
             Keycap = config.Keycaps,
-            TotalPrice = (config.Casesize?.Price ?? 0) + (config.Keycaps?.Price ?? 0) + (config.SwitchtypeId != null ? _db.Components.Find(config.SwitchtypeId)?.Price ?? 0 : 0)
+            TotalPrice = decimal.TryParse(config.TotalPriceRaw, out var p) ? p : 0
         };
     }
 

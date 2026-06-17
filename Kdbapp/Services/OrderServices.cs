@@ -28,14 +28,14 @@ public class OrderService
             await _db.SaveChangesAsync();
         }
 
-        var switchComponent = await _db.Components.FindAsync(config.SwitchtypeId);
-    
+        var totalPrice = decimal.TryParse(config.TotalPriceRaw, out var price) ? price : 0;
+
         return new Order
         {
             ConfigurationId = config.Id,
             UserId = user.Id, 
             Contactemail = user.Email,
-            TotalPrice = CalculateTotal(config, switchComponent),
+            TotalPrice = totalPrice, 
             Quantity = 1
         };
     }
